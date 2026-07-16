@@ -43,7 +43,7 @@ export function CTASection() {
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center" data-reveal>
           <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">
             Transform your industrial{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-amber-200">
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-[#C8FFE0] via-[#7BE495] to-[#2ECC71] drop-shadow-[0_0_20px_rgba(46,204,113,0.15)]">
               operations today.
             </span>
           </h2>

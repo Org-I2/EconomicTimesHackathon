@@ -203,10 +203,10 @@ export function HeroSection() {
         </div>
 
         {/* Headline */}
-        <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-extrabold tracking-tighter mb-6 leading-[1.05] drop-shadow-2xl">
+        <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-medium tracking-tight text-zinc-300 mb-6 leading-[1.05] drop-shadow-xl">
           Industrial intelligence,{' '}
           <br className="hidden sm:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 via-amber-200 to-accent-600 drop-shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+          <span className="font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#C8FFE0] via-[#7BE495] to-[#2ECC71] drop-shadow-[0_0_20px_rgba(46,204,113,0.15)]">
             unified.
           </span>
         </h1>

@@ -396,10 +396,10 @@ export function HeroSection({ totalDocs, indexedCount, pendingCount, expiringCou
           <h1 className="text-3xl lg:text-5xl font-bold text-text-primary tracking-tight leading-[1.15] mb-4">
             Your Industrial
             <span className="relative mx-2">
-              <span className="relative z-10 bg-gradient-to-r from-accent-500 to-amber-400 bg-clip-text text-transparent">
+              <span className="relative z-10 bg-gradient-to-b from-[#C8FFE0] via-[#7BE495] to-[#2ECC71] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(46,204,113,0.15)]">
                 Knowledge Brain
               </span>
-              <span className="absolute -bottom-1 left-0 right-0 h-[3px] bg-gradient-to-r from-accent-500/60 to-amber-400/30 rounded-full" />
+              <span className="absolute -bottom-1 left-0 right-0 h-[3px] bg-gradient-to-r from-[#7BE495]/60 to-[#2ECC71]/30 rounded-full" />
             </span>
           </h1>
           <p className="text-base lg:text-lg text-text-secondary leading-relaxed max-w-xl mx-auto">
