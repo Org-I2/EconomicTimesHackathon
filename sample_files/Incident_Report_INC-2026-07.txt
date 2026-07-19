@@ -1,0 +1,30 @@
+INCIDENT REPORT
+Report ID: INC-2026-07
+Equipment Tag: P-204
+Document Type: Incident Report
+Date: 2026-06-30
+
+1. INCIDENT DESCRIPTION
+Pump P-204 tripped on high vibration during startup at 06:42 on 2026-06-30. Operator
+attempted a single restart per procedure, which also tripped within 90 seconds on the same
+high vibration interlock.
+
+2. IMMEDIATE ACTIONS TAKEN
+2.1 Pump P-204 was isolated and tagged out pending investigation.
+2.2 Standby pump was brought online to maintain process water transfer without interruption.
+2.3 Maintenance team was notified and responded within 20 minutes.
+
+3. INITIAL OBSERVATIONS
+3.1 Vibration spike at trip was recorded at 9.2 mm/s RMS, well above the 4.5 mm/s RMS
+escalation threshold noted in prior inspection reports for this equipment.
+3.2 Seal flush filter had not been replaced since the last inspection in November 2024,
+exceeding the 3-month replacement interval defined in SOP-PUMP-204.
+3.3 Visual inspection found no obvious external leakage or damage at time of trip.
+
+4. CROSS-REFERENCE
+This is the third vibration-related trip event logged against P-204 in the past 14 months.
+Prior inspection report INS-2024-118 flagged a rising vibration trend on this equipment and
+recommended escalation if readings exceeded 4.5 mm/s RMS, which this event confirms.
+
+5. REPORTED BY
+Reported by Vinod Sharma, Shift Supervisor.

@@ -1,0 +1,23 @@
+LESSON LEARNED
+Title: Recurring seal filter neglect leading to vibration trips on P-204
+Equipment Tag: P-204
+Document Type: Lesson Learned
+
+PROBLEM
+Pump P-204 experienced repeated high-vibration trips over a 14-month period. Root cause
+investigation traced the pattern to inconsistent seal flush filter replacement, which was
+supposed to occur every 3 months per SOP-PUMP-204 but was frequently skipped or delayed
+during high workload periods, allowing fouling to build up and destabilize the seal flush
+pressure, which in turn increased bearing and seal vibration over time.
+
+RESOLUTION
+Seal flush filter replacement was added as a mandatory checklist item tied to the monthly
+lubrication check (rather than a separate 3-month task that was easy to miss), and a
+vibration trend alert was configured to notify reliability engineering automatically when
+readings exceed 4.0 mm/s RMS, ahead of the 4.5 mm/s RMS escalation threshold.
+
+TAGS
+seal, pump, P-204, vibration, preventive maintenance
+
+SUBMITTED BY
+Submitted by Rakesh Kumar, Maintenance Engineer, dated 2026-07-05.

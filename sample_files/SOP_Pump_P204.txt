@@ -1,0 +1,30 @@
+STANDARD OPERATING PROCEDURE
+Document ID: SOP-PUMP-204
+Equipment Tag: P-204
+Title: Operating and Maintenance Procedure for Centrifugal Pump P-204
+
+1. PURPOSE
+This procedure describes the standard operating and preventive maintenance steps for
+centrifugal pump P-204, located in the process water transfer skid, Unit 3.
+
+2. SCOPE
+Applies to all shift engineers and maintenance technicians responsible for the operation
+and upkeep of pump P-204 and its associated piping and instrumentation.
+
+3. OPERATING INSTRUCTIONS
+3.1 Before startup, verify suction valve V-101 is fully open and discharge valve is closed.
+3.2 Confirm seal flush line pressure is between 2.5 and 3.5 bar before energizing the motor.
+3.3 Start the pump and gradually open the discharge valve over 30 seconds to avoid surge.
+3.4 Monitor vibration readings; normal operating range is 2.0 to 4.5 mm/s RMS.
+
+4. PREVENTIVE MAINTENANCE
+4.1 Pump P-204 requires a full preventive maintenance inspection every 6 months.
+4.2 Seal flush filter should be replaced every 3 months or on high differential pressure alarm.
+4.3 Bearing lubrication is to be checked monthly and topped up per the OEM manual.
+
+5. SAFETY NOTES
+5.1 Lock out and tag out the motor breaker before any maintenance work.
+5.2 Wear hearing protection when working near the pump during operation.
+
+6. REVISION HISTORY
+Rev 3 approved by Anjali Rao, Reliability Engineer, dated 2026-01-15.

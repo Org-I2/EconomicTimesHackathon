@@ -100,7 +100,7 @@ def chunk_text(
     return chunks
 
 
-def process_and_index_document(document_id: str, pages: list[dict]) -> int:
+def process_and_index_document(document_id: str, pages: list[dict], filename: str = None) -> int:
     """
     Chunk, embed, and index every page of a document.
 
@@ -117,6 +117,10 @@ def process_and_index_document(document_id: str, pages: list[dict]) -> int:
     Args:
         document_id: Stable ID for the source document.
         pages: [{"page_number": int, "text": str}, ...]
+        filename: Optional original filename (e.g. "inspection_report.pdf"),
+            stored in each chunk's metadata so downstream retrieval (see
+            services.rag.retrieve) can show a human-readable source. If
+            omitted, chunks are stored with filename="".
 
     Returns:
         Total number of chunks created (and indexed) across all pages.
@@ -153,6 +157,7 @@ def process_and_index_document(document_id: str, pages: list[dict]) -> int:
                 "page_number": page_number,
                 "chunk_index": chunk_index,
                 "text": chunk,
+                "filename": filename or "",
             }
             upsert(chunk_id, vector, metadata)
             total_chunks += 1

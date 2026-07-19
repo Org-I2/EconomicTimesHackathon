@@ -1,0 +1,23 @@
+COMPLIANCE DOCUMENT
+Document Type: Compliance Certificate
+Equipment Tag: TK-3050
+Title: Pressure Vessel Safety Certificate for Storage Tank TK-3050
+
+1. CERTIFICATE DETAILS
+This certifies that storage tank TK-3050, located in the chemical storage area, Unit 5,
+has been inspected and meets applicable pressure vessel safety regulations under the
+Factory Act and OISD guidelines for atmospheric storage tanks.
+
+2. INSPECTION SUMMARY
+Tank shell thickness, weld integrity, and relief valve function were tested and found
+satisfactory. No corrosion beyond acceptable limits was observed on the tank exterior or
+accessible interior surfaces during the inspection.
+
+3. VALIDITY
+This certificate is valid for 24 months from the date of issue.
+Issue Date: 2024-09-01
+Expiry Date: 2026-09-01
+
+4. APPROVAL
+Approved by Vinod Sharma, Compliance Officer.
+Inspected by Anjali Rao, Reliability Engineer.

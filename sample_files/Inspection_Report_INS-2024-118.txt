@@ -1,0 +1,26 @@
+INSPECTION REPORT
+Report ID: INS-2024-118
+Equipment Tag: P-204
+Document Type: Inspection Report
+Date: 2024-11-02
+
+1. SUMMARY
+Routine 6-month inspection of centrifugal pump P-204 was carried out as part of the
+scheduled preventive maintenance program defined in SOP-PUMP-204.
+
+2. FINDINGS
+2.1 Visible corrosion was noted on the pump housing near flange B. Corrosion depth was
+estimated at less than 1mm and does not currently affect structural integrity.
+2.2 Vibration readings measured at 3.8 mm/s RMS, within the normal operating range but
+trending upward compared to the previous inspection (2.9 mm/s RMS in May 2024).
+2.3 Seal flush filter showed moderate fouling; filter was replaced during this inspection.
+2.4 No abnormal noise or leakage was observed during the operational check.
+
+3. RECOMMENDATIONS
+3.1 Recommend re-inspection of flange B corrosion at the next scheduled maintenance window.
+3.2 Continue monitoring vibration trend; escalate to reliability engineering if readings
+exceed 4.5 mm/s RMS before the next scheduled inspection.
+
+4. INSPECTOR DETAILS
+Inspected by Rakesh Kumar, Maintenance Engineer.
+Approved by Anjali Rao, Reliability Engineer.
