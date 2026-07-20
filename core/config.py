@@ -30,6 +30,9 @@ class Settings:
     # --- OCR ---
     ocr_low_confidence_threshold: float = 0.40
 
+    # --- Knowledge graph ---
+    graph_db_path: str = "./data/graph/knowledge_graph.sqlite3"
+
     # --- LLM (Ollama local fallback) ---
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "llama3.1:8b"
