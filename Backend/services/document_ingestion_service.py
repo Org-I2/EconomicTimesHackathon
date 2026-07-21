@@ -101,101 +101,133 @@ def parse_and_extract_pages(file_bytes: bytes, filename: str, temp_dir: str) -> 
     return pages
 
 def save_knowledge_graph(db: Session, doc_db: models.Document, page_records: list[models.Page]):
-    """Extracts entities and relationships using the LLM adapter and saves them to PostgreSQL."""
-    # Maps entity_value -> Entity database record to resolve relationship links
-    entity_cache = {}
+    """Extracts entities and relationships using the regex heuristics and saves them to PostgreSQL."""
+    if not page_records:
+        return
+
+    from services.graph import extract_equipment_tags, extract_persons
+
+    first_page = page_records[0]
+
+    # 1. Create or get Document Entity (acts as the root node of the graph)
+    doc_entity = db.query(models.Entity).filter(
+        models.Entity.document_id == doc_db.id,
+        models.Entity.entity_type == "Document",
+        models.Entity.normalized_value == str(doc_db.id).lower()
+    ).first()
+
+    if not doc_entity:
+        doc_entity = models.Entity(
+            document_id=doc_db.id,
+            page_id=first_page.id,
+            entity_type="Document",
+            entity_value=doc_db.filename,
+            normalized_value=str(doc_db.id).lower(),
+            context_snippet=f"Root Document Node: {doc_db.filename}"
+        )
+        db.add(doc_entity)
+        db.flush()
 
     for page in page_records:
         if not page.text_content.strip():
             continue
-            
-        logger.info("Extracting Knowledge Graph for Document %s, Page %d", doc_db.filename, page.page_number)
-        kg_data = ml_adapter.extract_knowledge_graph(page.text_content)
+
+        logger.info("Extracting Knowledge Graph for Document %s, Page %d via regex heuristics", doc_db.filename, page.page_number)
         
-        # Save Entities
-        for ent in kg_data.get("entities", []):
-            val = ent.get("value", "").strip()
-            etype = ent.get("type", "").strip()
-            if not val or not etype:
-                continue
-                
-            norm_val = val.lower()
+        tags = extract_equipment_tags(page.text_content)
+        persons = extract_persons(page.text_content)
+
+        # Save Equipment Entities and their relations
+        for tag in tags:
+            norm_val = tag.strip().upper()
             
             # Check unique constraint: (page_id, entity_type, normalized_value)
-            existing_entity = db.query(models.Entity).filter(
+            entity = db.query(models.Entity).filter(
                 models.Entity.page_id == page.id,
-                models.Entity.entity_type == etype,
+                models.Entity.entity_type == "Equipment",
                 models.Entity.normalized_value == norm_val
             ).first()
             
-            if existing_entity:
-                entity_cache[(page.id, etype, norm_val)] = existing_entity
-                continue
+            if not entity:
+                entity = models.Entity(
+                    document_id=doc_db.id,
+                    page_id=page.id,
+                    entity_type="Equipment",
+                    entity_value=tag.strip(),
+                    normalized_value=norm_val,
+                    context_snippet=f"Mentioned in page {page.page_number}"
+                )
+                db.add(entity)
+                db.flush()
                 
-            db_entity = models.Entity(
-                document_id=doc_db.id,
-                page_id=page.id,
-                entity_type=etype,
-                entity_value=val,
-                normalized_value=norm_val,
-                context_snippet=ent.get("context")
-            )
-            db.add(db_entity)
-            db.flush()  # populate ID
-            entity_cache[(page.id, etype, norm_val)] = db_entity
-
-        # Save Relationships
-        for rel in kg_data.get("relationships", []):
-            s_val = rel.get("source_value", "").strip()
-            t_val = rel.get("target_value", "").strip()
-            rtype = rel.get("type", "").strip()
-            
-            if not s_val or not t_val or not rtype:
-                continue
+            # Create MENTIONED_IN relation from Equipment to Document
+            rel1 = db.query(models.EntityRelationship).filter(
+                models.EntityRelationship.source_entity_id == entity.id,
+                models.EntityRelationship.target_entity_id == doc_entity.id,
+                models.EntityRelationship.relationship_type == "MENTIONED_IN"
+            ).first()
+            if not rel1:
+                rel1 = models.EntityRelationship(
+                    source_entity_id=entity.id,
+                    target_entity_id=doc_entity.id,
+                    relationship_type="MENTIONED_IN",
+                    context_snippet=f"Equipment {tag} mentioned in document"
+                )
+                db.add(rel1)
                 
-            # Find matching entity records on this page
-            s_entity = None
-            t_entity = None
-            
-            # Simple matching on normalized name values
-            s_norm = s_val.lower()
-            t_norm = t_val.lower()
-            
-            for (pid, etype, norm_val), entity_obj in entity_cache.items():
-                if pid == page.id:
-                    if norm_val == s_norm:
-                        s_entity = entity_obj
-                    if norm_val == t_norm:
-                        t_entity = entity_obj
-            
-            # If not found in cache, do a DB check for entities on this page
-            if not s_entity:
-                s_entity = db.query(models.Entity).filter(
-                    models.Entity.page_id == page.id,
-                    models.Entity.normalized_value == s_norm
+            # Create HAS_INCIDENT relation if document is Incident Report
+            if doc_db.doc_type == "Incident Report":
+                rel2 = db.query(models.EntityRelationship).filter(
+                    models.EntityRelationship.source_entity_id == entity.id,
+                    models.EntityRelationship.target_entity_id == doc_entity.id,
+                    models.EntityRelationship.relationship_type == "HAS_INCIDENT"
                 ).first()
-            if not t_entity:
-                t_entity = db.query(models.Entity).filter(
-                    models.Entity.page_id == page.id,
-                    models.Entity.normalized_value == t_norm
-                ).first()
-                
-            if s_entity and t_entity:
-                # Check uniqueness constraint: (source_entity_id, target_entity_id, relationship_type)
-                existing_rel = db.query(models.EntityRelationship).filter(
-                    models.EntityRelationship.source_entity_id == s_entity.id,
-                    models.EntityRelationship.target_entity_id == t_entity.id,
-                    models.EntityRelationship.relationship_type == rtype
-                ).first()
-                
-                if not existing_rel:
-                    db_rel = models.EntityRelationship(
-                        source_entity_id=s_entity.id,
-                        target_entity_id=t_entity.id,
-                        relationship_type=rtype,
-                        context_snippet=rel.get("context")
+                if not rel2:
+                    rel2 = models.EntityRelationship(
+                        source_entity_id=entity.id,
+                        target_entity_id=doc_entity.id,
+                        relationship_type="HAS_INCIDENT",
+                        context_snippet=f"Incident reported on equipment {tag}"
                     )
-                    db.add(db_rel)
+                    db.add(rel2)
+
+        # Save Person Entities and their relations
+        for person in persons:
+            norm_val = person.strip().upper()
+            
+            # Check unique constraint: (page_id, entity_type, normalized_value)
+            entity = db.query(models.Entity).filter(
+                models.Entity.page_id == page.id,
+                models.Entity.entity_type == "Person",
+                models.Entity.normalized_value == norm_val
+            ).first()
+            
+            if not entity:
+                entity = models.Entity(
+                    document_id=doc_db.id,
+                    page_id=page.id,
+                    entity_type="Person",
+                    entity_value=person.strip(),
+                    normalized_value=norm_val,
+                    context_snippet=f"Mentioned in page {page.page_number}"
+                )
+                db.add(entity)
+                db.flush()
+                
+            # Create MENTIONED_IN relation from Person to Document
+            rel = db.query(models.EntityRelationship).filter(
+                models.EntityRelationship.source_entity_id == entity.id,
+                models.EntityRelationship.target_entity_id == doc_entity.id,
+                models.EntityRelationship.relationship_type == "MENTIONED_IN"
+            ).first()
+            if not rel:
+                rel = models.EntityRelationship(
+                    source_entity_id=entity.id,
+                    target_entity_id=doc_entity.id,
+                    relationship_type="MENTIONED_IN",
+                    context_snippet=f"Person {person} mentioned in document"
+                )
+                db.add(rel)
 
 def ingest_document_pipeline(db: Session, document_id: str, file_bytes: bytes):
     """Orchestrates the synchronous ingestion pipeline. Called in background tasks."""
