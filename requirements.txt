@@ -1,9 +1,23 @@
+# Backend Dependencies
+fastapi>=0.100.0
+uvicorn>=0.22.0
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+python-multipart>=0.0.6
+PyJWT>=2.8.0
+passlib[bcrypt]>=1.7.4
+cloudinary>=1.34.0
+httpx>=0.24.0
+alembic>=1.11.0
+pymupdf>=1.22.0
+python-dotenv>=1.0.0
+email-validator>=2.0.0
+
+# ML Dependencies
 sentence-transformers
 chromadb
 pytesseract
 opencv-python-headless
-pymupdf
-httpx
 openai
 google-genai
 numpy
