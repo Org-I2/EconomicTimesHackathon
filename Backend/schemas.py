@@ -40,7 +40,7 @@ class DocumentResponse(BaseModel):
     status: DocumentStatus
     ocr_confidence: Optional[float]
     processing_error: Optional[str]
-    total_chunks: Optional[str] = None  # converted internally or int
+    total_chunks: Optional[int] = None  # converted internally or int
     uploaded_at: datetime
 
     class Config:
