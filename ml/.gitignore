@@ -1,7 +1,0 @@
-data/
-__pycache__/
-*.pyc
-.pytest_cache/
-.env
-.env.*
-smoke_test_sample_files.py

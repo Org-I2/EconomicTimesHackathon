@@ -164,3 +164,49 @@ data/
 
 # Miscellaneous
 smoke_test_sample_files.py
+
+# =========================
+# FRONTEND (React/Vite)
+# =========================
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node modules
+node_modules
+frontend/node_modules/
+
+# Build output
+dist
+dist-ssr
+frontend/dist/
+frontend/dist-ssr/
+
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# =========================
+# ML & DATA
+# =========================
+data/
+ml/data/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
