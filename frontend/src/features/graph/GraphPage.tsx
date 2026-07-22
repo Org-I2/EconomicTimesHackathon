@@ -174,7 +174,10 @@ export default function GraphPage() {
           });
           nodeIds.add(neighborId);
         }
+      }
         
+      // Ensure both source and target nodes are actually visible before adding the link
+      if (nodeIds.has(edge.source_id) && nodeIds.has(edge.target_id)) {
         processedLinks.push({
           id: edge.id,
           type: edge.relationship_type,

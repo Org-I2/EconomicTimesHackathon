@@ -18,15 +18,15 @@ export default function SystemHealthPage() {
   });
 
   const getStatusIcon = (status?: string) => {
-    if (status === 'ok') return <CheckCircle className="h-5 w-5 text-success" />;
+    if (status === 'ok' || status === 'healthy') return <CheckCircle className="h-5 w-5 text-success" />;
     if (status === 'degraded') return <AlertTriangle className="h-5 w-5 text-warning" />;
     return <XCircle className="h-5 w-5 text-danger" />;
   };
 
   const getStatusColor = (status?: string) => {
-    if (status === 'ok') return 'border-success/30';
-    if (status === 'degraded') return 'border-warning/30';
-    return 'border-danger/30';
+    if (status === 'ok' || status === 'healthy') return 'text-success bg-success/10 border-success/20';
+    if (status === 'degraded') return 'text-warning bg-warning/10 border-warning/20';
+    return 'text-danger bg-danger/10 border-danger/20';
   };
 
   return (
