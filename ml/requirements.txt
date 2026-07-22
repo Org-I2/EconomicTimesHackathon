@@ -4,6 +4,4 @@ pytesseract
 opencv-python-headless
 pymupdf
 httpx
-openai
-google-genai
 numpy

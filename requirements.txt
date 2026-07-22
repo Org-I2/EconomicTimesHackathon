@@ -18,6 +18,4 @@ sentence-transformers
 chromadb
 pytesseract
 opencv-python-headless
-openai
-google-genai
 numpy
