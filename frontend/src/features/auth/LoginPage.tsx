@@ -39,7 +39,11 @@ export default function LoginPage() {
   const mutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
-      login(data.access_token, data.role, '', data.expires_in);
+      // Backend only returns access_token + token_type.
+      // Extract email from decoded JWT payload (sub claim).
+      const email = (data._decoded?.sub as string) || '';
+      // Default: 24h expiry (86400s), role 'admin' (no role in token yet)
+      login(data.access_token, 'admin', email, 86400);
       navigate(from, { replace: true });
     },
     onError: (error) => {

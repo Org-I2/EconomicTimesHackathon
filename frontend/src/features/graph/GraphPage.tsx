@@ -64,7 +64,7 @@ interface CustomLink extends LinkObject {
 /** Knowledge Graph visualization using react-force-graph-2d */
 export default function GraphPage() {
   const navigate = useNavigate();
-  const fgRef = useRef<ForceGraphMethods>();
+  const fgRef = useRef<ForceGraphMethods>(null);
   
   const {
     equipmentFilter, setEquipmentFilter,
@@ -133,14 +133,14 @@ export default function GraphPage() {
     const nodeIds = new Set<string>();
 
     // Add root node
-    if (visibleNodeTypes[graphData.node.type]) {
+    if (visibleNodeTypes[graphData.node.type as GraphNodeType]) {
       processedNodes.push({
         id: graphData.node.id,
-        type: graphData.node.type,
+        type: graphData.node.type as GraphNodeType,
         label: graphData.node.label,
-        properties: graphData.node.properties,
-        val: NODE_SIZES[graphData.node.type] * 1.5, // Root is larger
-        color: NODE_COLORS[graphData.node.type],
+        properties: (graphData.node as any).properties || {},
+        val: NODE_SIZES[graphData.node.type as GraphNodeType] * 1.5, // Root is larger
+        color: NODE_COLORS[graphData.node.type as GraphNodeType],
       });
       nodeIds.add(graphData.node.id);
     }

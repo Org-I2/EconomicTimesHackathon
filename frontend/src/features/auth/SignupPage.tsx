@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
 import { Cpu, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useAuthStore } from '@/stores/authStore';
+import { authApi } from '@/lib/api';
+import { ApiClientError } from '@/lib/api/client';
 
 const signupSchema = z.object({
   fullName: z.string().min(2, 'Full name is required'),
@@ -30,14 +33,49 @@ export default function SignupPage() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
   });
 
+  const signupMutation = useMutation({
+    mutationFn: (data: SignupFormData) =>
+      authApi.signup({
+        email: data.email,
+        password: data.password,
+        full_name: data.fullName,
+        role: 'operator' as const,
+      }),
+    onSuccess: async (_signupData, formData) => {
+      // After signup, auto-login
+      try {
+        const loginResult = await authApi.login({
+          username: formData.email,
+          password: formData.password,
+        });
+        const email = (loginResult._decoded?.sub as string) || formData.email;
+        login(loginResult.access_token, 'admin', email, 86400);
+        navigate('/dashboard', { replace: true });
+      } catch {
+        // Signup succeeded but login failed — redirect to login page
+        navigate('/login', { replace: true });
+      }
+    },
+    onError: (error) => {
+      if (error instanceof ApiClientError) {
+        if (error.status === 400) {
+          setError('root', { message: error.message || 'Email already in use' });
+        } else {
+          setError('root', { message: error.message || 'Signup failed. Please try again.' });
+        }
+      } else {
+        setError('root', { message: 'Unable to connect to the server' });
+      }
+    },
+  });
+
   const onSubmit = (data: SignupFormData) => {
-    // Mock successful signup -> login -> dashboard
-    login('mock-jwt-token-12345', 'admin', data.fullName, 86400);
-    navigate('/dashboard', { replace: true });
+    signupMutation.mutate(data);
   };
 
   return (
@@ -164,9 +202,16 @@ export default function SignupPage() {
                 </button>
             </div>
 
+            {errors.root && (
+              <div className="p-3 rounded-lg bg-danger-muted border border-danger/20 animate-slide-up">
+                <p className="text-sm text-danger">{errors.root.message}</p>
+              </div>
+            )}
+
             <Button
               type="submit"
               className="w-full h-12 text-base font-semibold group mt-2"
+              loading={signupMutation.isPending}
             >
               Create Account
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

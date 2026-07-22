@@ -92,8 +92,8 @@ export default function UploadPage() {
       for (const entry of queuedFiles) {
         updateFileStatus(entry.id, 'uploading', 10);
         try {
-          const result = await documentsApi.upload([entry.file], entry.metadata);
-          updateFileStatus(entry.id, 'uploaded', 100, undefined, result.uploaded[0]?.document_id);
+          const result = await documentsApi.upload(entry.file, (entry.metadata.document_type as string) || 'Manual');
+          updateFileStatus(entry.id, 'uploaded', 100, undefined, result.document_id);
         } catch (err: unknown) {
           const message = err instanceof Error ? err.message : 'Upload failed';
           updateFileStatus(entry.id, 'failed', 0, message);

@@ -11,6 +11,7 @@ interface BadgeProps {
   variant?: BadgeVariant;
   className?: string;
   dot?: boolean;
+  style?: React.CSSProperties;
 }
 
 const badgeVariants: Record<BadgeVariant, string> = {
@@ -23,7 +24,7 @@ const badgeVariants: Record<BadgeVariant, string> = {
 };
 
 /** Small badge for labels, counts, and categories */
-export function Badge({ children, variant = 'default', className, dot }: BadgeProps) {
+export function Badge({ children, variant = 'default', className, dot, style }: BadgeProps) {
   return (
     <span
       className={cn(
@@ -32,6 +33,7 @@ export function Badge({ children, variant = 'default', className, dot }: BadgePr
         badgeVariants[variant],
         className
       )}
+      style={style}
     >
       {dot && (
         <span className={cn(

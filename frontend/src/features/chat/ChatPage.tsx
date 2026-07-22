@@ -69,8 +69,9 @@ export default function ChatPage() {
           if (parsed.citations) {
             citations = parsed.citations;
           }
-          if (parsed.conversation_id) {
-            setConversationId(parsed.conversation_id);
+          if (parsed.session_id && !conversationId) {
+            setConversationId(parsed.session_id);
+            navigate(`/chat?session=${parsed.session_id}`, { replace: true });
           }
         } catch {
           // Plain text token
@@ -101,7 +102,7 @@ export default function ChatPage() {
             top_k: 6,
           });
           useChatStore.getState().setAssistantMessage(assistantMsgId, response.answer, response.citations);
-          if (response.conversation_id) setConversationId(response.conversation_id);
+          if (response.session_id) setConversationId(response.session_id);
         } catch (fallbackErr) {
           const msg = fallbackErr instanceof ApiClientError ? fallbackErr.message : 'An unexpected error occurred';
           setStreamingError(msg);

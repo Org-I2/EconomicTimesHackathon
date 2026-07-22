@@ -39,7 +39,7 @@ export default function SystemHealthPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
-            <Card key={i} className="h-32 animate-pulse" />
+            <Card key={i} className="h-24 animate-pulse"><></></Card>
           ))}
         </div>
       ) : isError || !data ? (
@@ -67,37 +67,37 @@ export default function SystemHealthPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
             {/* Database */}
-            <Card className={cn(getStatusColor(data.services.database))}>
+            <Card className={cn(getStatusColor(data.services?.db?.status))}>
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <Database className="h-4 w-4 text-text-tertiary" />
                   <CardTitle className="text-sm">SQLite Database</CardTitle>
                 </div>
-                {getStatusIcon(data.services.database)}
+                {getStatusIcon(data.services?.db?.status)}
               </div>
               <p className="text-xs text-text-secondary">Relational storage for metadata and auth</p>
             </Card>
 
             {/* Vector Store */}
-            <Card className={cn(getStatusColor(data.services.vector_store))}>
+            <Card className={cn(getStatusColor(data.services?.vector_index?.status))}>
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <Server className="h-4 w-4 text-text-tertiary" />
                   <CardTitle className="text-sm">ChromaDB</CardTitle>
                 </div>
-                {getStatusIcon(data.services.vector_store)}
+                {getStatusIcon(data.services?.vector_index?.status)}
               </div>
               <p className="text-xs text-text-secondary">Vector embeddings and semantic search</p>
             </Card>
 
             {/* LLM */}
-            <Card className={cn(getStatusColor(data.services.llm))}>
+            <Card className={cn(getStatusColor(data.services?.ollama?.status))}>
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <Cpu className="h-4 w-4 text-text-tertiary" />
                   <CardTitle className="text-sm">Ollama LLM</CardTitle>
                 </div>
-                {getStatusIcon(data.services.llm)}
+                {getStatusIcon(data.services?.ollama?.status)}
               </div>
               <p className="text-xs text-text-secondary">Local language model for RAG & chat</p>
             </Card>

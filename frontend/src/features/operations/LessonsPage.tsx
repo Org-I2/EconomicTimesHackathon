@@ -141,7 +141,7 @@ export default function LessonsPage() {
                   </Badge>
                 )}
                 <div className="flex flex-wrap gap-1">
-                  {lesson.tags.map((tag) => (
+                  {lesson.tags.map((tag: string) => (
                     <Badge key={tag} variant="default" className="text-[10px] bg-surface-secondary">
                       {tag}
                     </Badge>

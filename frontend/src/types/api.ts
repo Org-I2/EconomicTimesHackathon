@@ -146,7 +146,7 @@ export interface Citation {
 export interface ChatResponse {
   answer: string;
   citations: Citation[];
-  conversation_id: string;
+  session_id: string;
 }
 
 /** Local chat message representation */
@@ -274,7 +274,10 @@ export interface ProbableFactor {
 }
 
 export interface RcaAnalyzeResponse {
+  analysis: string;
+  recommended_actions: string[];
   probable_factors: ProbableFactor[];
+  similar_incidents: { document_id: string; filename: string; snippet?: string }[];
   related_documents: { document_id: string; filename: string }[];
 }
 
