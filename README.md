@@ -6,7 +6,7 @@
 
 ## 🚀 Live Application
 Access the deployed production environment here:
-**[Insert Deployed Link Here]**
+**[https://economic-times-hackathon.vercel.app/](https://economic-times-hackathon.vercel.app/)**
 
 ## 🎥 Video Demonstration
 Watch a full walkthrough of the UAO Brain platform in action:
@@ -85,7 +85,7 @@ npm run dev
 ---
 
 ## 🌐 Live Deployment Links
-- **Application UI**: **[Insert Deployed Link Here]**
+- **Application UI**: **[https://economic-times-hackathon.vercel.app/](https://economic-times-hackathon.vercel.app/)**
 - **Backend API**: **[https://economictimeshackathon.onrender.com](https://economictimeshackathon.onrender.com)**
 
 ---
@@ -96,3 +96,34 @@ npm run dev
 2. **AI Copilot (RAG Chat)**: A seamless conversational interface where users can ask complex questions about their industrial assets. The system performs semantic vector search across the knowledge base and feeds the retrieved context into an LLM to provide highly accurate answers backed by inline citations.
 3. **Semantic Knowledge Graph**: A highly interactive, visual node-based explorer that illustrates semantic relationships between equipment, procedures, and historical incidents, allowing operators to visualize the blast radius of failures.
 4. **Specialized Agent Workflows**: Advanced AI endpoints that can execute automated Root Cause Analysis (RCA) on incident reports or perform deep Compliance Checks against newly uploaded industry regulations.
+
+---
+
+## 📖 User Walkthrough & Modules Guide
+
+Here is a step-by-step guide on how to navigate the UAO Brain UI and access its various modules:
+
+### 1. Authentication & Onboarding
+- **Sign Up / Login** (`/signup`, `/login`): Start by creating an account. The system uses secure JWT authentication to verify users before granting access to the internal dashboard.
+
+### 2. Document Ingestion (Overview & Ingest)
+- **Dashboard** (`/dashboard`): The main landing view providing a high-level summary of system statistics.
+- **Upload Documents** (`/upload`): Navigate here to upload your PDFs, P&IDs, or TXT files. You can tag files by `Document Type` (e.g., SOP, Manual, Incident Report) and `Equipment Tag`.
+- **Processing Queue** (`/processing`): Monitor the real-time status of your uploads as the backend extracts text, generates embeddings, and maps Knowledge Graph entities.
+- **Document Browser** (`/documents`): A searchable list of all successfully ingested documents in the system.
+
+### 3. Intelligence Modules
+- **AI Copilot** (`/chat`): The conversational RAG interface. Ask questions like *"What is the shutdown procedure for Pump 104A?"* and receive cited answers based strictly on uploaded documents.
+- **Search** (`/search`): A hybrid search interface allowing you to quickly find documents by matching text or filtering by equipment tags.
+- **Knowledge Graph** (`/graph`): An interactive D3 visualizer. Use this to explore the semantic web of relationships between your industrial entities (Equipment, Procedures, Personnel, etc).
+
+### 4. Specialized Operations
+- **Maintenance Intelligence** (`/maintenance`): Review predictive maintenance schedules based on historical data.
+- **Root Cause Analysis (RCA)** (`/rca`): Select an equipment tag to trigger an automated AI analysis of probable failure causes based on incident history.
+- **Compliance Check** (`/compliance`): Automatically cross-reference regulatory standards against internal SOPs to identify gaps.
+- **Lessons Learned** (`/lessons-learned`): Review a repository of past operational mistakes and their corresponding AI-generated mitigation strategies.
+
+### 5. Administration
+- **Admin Dashboard** (`/admin`): Restricted to admin roles. Manage users and system settings.
+- **Audit Logs** (`/admin/audit-log`): Track all actions taken by users within the platform.
+- **System Health** (`/admin/system-health`): Monitor the live connectivity status of PostgreSQL, ChromaDB, Cloudinary, and the LLM provider.
