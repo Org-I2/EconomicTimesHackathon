@@ -84,6 +84,12 @@ npm run dev
 
 ---
 
+## 🌐 Live Deployment Links
+- **Application UI**: **[Insert Deployed Link Here]**
+- **Backend API**: **[https://economictimeshackathon.onrender.com](https://economictimeshackathon.onrender.com)**
+
+---
+
 ## 🛠️ Key Features & Workflow
 
 1. **Intelligent Document Ingestion**: Users can upload complex manuals, SOPs, or incident reports. The system securely uploads the file to the cloud, semantically chunks the text, generates vector embeddings (stored in ChromaDB), and utilizes advanced LLMs to extract critical entities and relationships for the Knowledge Graph.

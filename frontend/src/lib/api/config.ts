@@ -17,7 +17,7 @@
  * - In development, leave empty so Vite's proxy (vite.config.ts /api → localhost:8000) handles routing.
  * - In production, set VITE_API_BASE_URL to your deployed backend URL (e.g. https://xyz.onrender.com).
  */
-export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL || '';
+export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL || 'https://economictimeshackathon.onrender.com';
 
 /**
  * All backend API endpoint paths (relative to API_BASE_URL).
